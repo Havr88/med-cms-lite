@@ -1,65 +1,46 @@
 import Image from "next/image";
+import ServiceCarousel from "../components/ServiceCarousel";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="animate-fade-in">
+      <section className="hero" style={{ 
+        backgroundImage: 'linear-gradient(rgba(0, 124, 186, 0.8), rgba(0, 0, 0, 0.7)), url("/clinica-fachada.jpg")',
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        color: 'white',
+        borderBottom: '4px solid var(--color-accent)'
+      }}>
+        <div className="container" style={{ position: 'relative', zIndex: 10 }}>
+          {/* Logo placeholder oculto si ya está en el nav, o se puede usar uno más grande aquí */}
+          
+          <h1 style={{ color: 'white', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>Tu salud es nuestra prioridad</h1>
+          <p style={{ color: 'rgba(255,255,255,0.9)', textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
+            En la Clínica Popular Jesús de Nazareth, orgullo de la red <strong>SaludAnz</strong>, brindamos atención médica integral y gratuita, con instalaciones modernas y rehabilitadas al servicio de Puerto La Cruz y Anzoátegui.
+          </p>
+          <div className="flex justify-center gap-4 mt-4" style={{ flexWrap: 'wrap' }}>
+            <a href="/servicios" className="btn-primary" style={{ backgroundColor: 'var(--color-accent)', color: '#000' }}>Ver Especialidades</a>
+            <a href="/horarios" className="btn-primary" style={{ backgroundColor: 'transparent', color: 'white', border: '2px solid white' }}>Consultar Horarios</a>
+          </div>
+        </div>
+      </section>
+
+      <section className="container py-12">
+        <div className="text-center mb-8">
+          <h2 className="text-primary" style={{ fontSize: '2.5rem' }}>Nuestros Servicios</h2>
+          <p className="text-muted mt-4" style={{ maxWidth: '600px', margin: '1rem auto' }}>
+            Contamos con diversas especialidades médicas para cubrir las necesidades de tu familia en un solo lugar.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <ServiceCarousel />
+
+        <div className="text-center mt-8">
+           <a href="/servicios" className="text-primary" style={{ textDecoration: 'underline', fontWeight: 500 }}>Ver todos los servicios disponibles &rarr;</a>
         </div>
-      </main>
+      </section>
+
+
     </div>
   );
 }

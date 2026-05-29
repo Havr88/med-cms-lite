@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sistema Web y de Gestión - Clínica Popular Jesús de Nazareth
 
-## Getting Started
+Este proyecto es la plataforma web oficial y el sistema de gestión administrativa para la **Clínica Popular Jesús de Nazareth** (Puerto La Cruz, Anzoátegui), desarrollada bajo los lineamientos de la Gobernación del Estado Anzoátegui (SaludAnz).
 
-First, run the development server:
+## Tecnologías Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+*   **Frontend:** [Next.js](https://nextjs.org/) (React Framework)
+*   **Estilos:** CSS Modules y Vanilla CSS (Diseño "Glassmorphism" y Modo Oscuro/Claro dinámico)
+*   **Base de Datos y Backend:** [Supabase](https://supabase.com/) (PostgreSQL)
+*   **Seguridad:** Monitoreo activo de conexiones y auditoría avanzada (WebGL Fingerprinting, Canvas Hash).
+*   **Licenciamiento:** GNU AGPL v3.0, compatible con la Licencia Venezolana de Software Libre (LVSL).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades Principales
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+1.  **Portal Informativo Público:**
+    *   Información sobre los servicios médicos y especialidades.
+    *   Cuadernillo virtual interactivo para la consulta de horarios.
+    *   Generador de PDF integrado para imprimir el cuadernillo de horarios.
+    *   Blog de noticias y comunicados oficiales.
+    *   Información de contacto, redes sociales (SaludAnz, Gobernación) y ubicación georreferenciada.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2.  **Panel de Administración Segura (`/admin`):**
+    *   **Gestión de Servicios:** Crear, editar y organizar las especialidades médicas, sus horarios divididos (mañana y tarde) y notas adicionales.
+    *   **Gestión de Blog/Noticias:** Publicador de comunicados oficiales.
+    *   **Configuración de Marca Blanca:** Editor de los textos del pie de página, correos, teléfonos y enlaces institucionales.
+    *   **Auditoría Activa:** Panel de inicio de sesión reforzado con sistemas disuasorios (detección de User-Agent, WAN IP, LAN IP via WebRTC y huellas digitales de hardware/fuentes).
 
-## Learn More
+## Cómo ejecutar el proyecto localmente
 
-To learn more about Next.js, take a look at the following resources:
+1.  Clona el repositorio:
+    ```bash
+    git clone <URL_DEL_REPOSITORIO>
+    cd infoweb
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2.  Instala las dependencias:
+    ```bash
+    npm install
+    # o
+    yarn install
+    # o
+    pnpm install
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3.  Configura las variables de entorno en un archivo `.env.local`:
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL=tu_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_supabase_anon_key
+    ```
 
-## Deploy on Vercel
+4.  Inicia el servidor de desarrollo:
+    ```bash
+    npm run dev
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5.  Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver el resultado.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Cumplimiento de Infogobierno
+
+Este desarrollo fue realizado respetando los principios de la **Ley de Infogobierno** y los estándares del Centro Nacional de Tecnologías de Información (CNTI), garantizando la soberanía tecnológica y el uso de Software Libre en la administración pública venezolana.

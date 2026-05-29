@@ -33,6 +33,7 @@ export default function RootLayout({ children }) {
               <a href="/servicios" style={{ fontWeight: 500, transition: 'color 0.2s' }}>Servicios</a>
               <a href="/horarios" style={{ fontWeight: 500, transition: 'color 0.2s' }}>Horarios</a>
               <a href="/noticias" style={{ fontWeight: 500, transition: 'color 0.2s' }}>Noticias</a>
+              <a href="/contacto" style={{ fontWeight: 500, transition: 'color 0.2s', color: 'var(--color-primary)' }}>Contacto</a>
             </div>
 
             {/* Logo Clínica (Derecha) */}
@@ -47,21 +48,15 @@ export default function RootLayout({ children }) {
         </main>
         
         <footer style={{ background: 'var(--color-surface)', borderTop: '1px solid var(--color-border)', padding: '1rem 0', flexShrink: 0, zIndex: 100 }}>
-          <div className="container" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-              <div style={{ fontSize: '0.875rem' }}>
-                <strong className="text-primary">Ubicación:</strong> Sector Gulf, Guanire, Puerto La Cruz. <a href="https://www.google.com/maps/search/CLINICA+POPULAR+JESUS+DE+NAZARETH+Puerto+La+Cruz" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>Ver Mapa</a>
-              </div>
-              <div style={{ display: 'flex', gap: '1rem', fontSize: '0.875rem' }}>
-                <a href="https://instagram.com/saludanz" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">📷 SaludAnz</a>
-                <a href="https://instagram.com/anzoateguigob" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">📷 Gobernación</a>
-              </div>
-              <div style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
-                <strong>Sede Central SaludAnz:</strong> Av. Miranda, Barcelona. <br/>
-                <strong>Tel:</strong> 0281-2752482 / 0412-0572125 | <strong>Correo:</strong> saludanzrrhh2024@gmail.com
-              </div>
-              <div style={{ fontSize: '0.875rem' }}>
-                <a href="/admin" className="hover:text-primary transition-colors text-muted">Acceso Administrador</a>
-              </div>
+          {/* Cumplimiento Infogobierno y Software Libre */}
+          <div className="container" style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+              <p style={{ marginBottom: '0.25rem' }}>
+                Desarrollado bajo los principios de <strong>Software Libre</strong> en cumplimiento con la <em>Ley de Infogobierno de la República Bolivariana de Venezuela</em> y normativas del CNTI.
+              </p>
+              <p>
+                Código fuente liberado bajo licencia <strong>GNU AGPL v3.0</strong>, compatible con la Licencia Venezolana de Software Libre (LVSL). 
+                <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline', marginLeft: '4px' }}>Ver Licencia</a>.
+              </p>
             </div>
         </footer>
       </body>

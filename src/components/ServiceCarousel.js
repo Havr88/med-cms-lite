@@ -1,17 +1,7 @@
 "use client";
 import { useEffect, useRef } from 'react';
 
-const allServices = [
-  { title: "Medicina Interna", icon: "🩺", desc: "Evaluación integral para el diagnóstico y tratamiento de enfermedades en adultos." },
-  { title: "Pediatría", icon: "👶", desc: "Atención médica especializada para el cuidado y desarrollo saludable de los más pequeños." },
-  { title: "Ginecología", icon: "🤰", desc: "Cuidado de la salud femenina y seguimiento integral con área de maternidad." },
-  { title: "Odontología", icon: "🦷", desc: "Prevención, diagnóstico y tratamiento para el cuidado y estética de la salud bucal." },
-  { title: "Traumatología", icon: "🦴", desc: "Atención integral de lesiones y padecimientos del sistema musculoesquelético." },
-  { title: "Nutrición", icon: "🥗", desc: "Evaluación, diagnóstico y tratamiento nutricional adaptado a tus necesidades." },
-  { title: "Laboratorio Clínico", icon: "🔬", desc: "Pruebas rápidas y exámenes de laboratorio básicos y avanzados." }
-];
-
-export default function ServiceCarousel() {
+export default function ServiceCarousel({ services = [] }) {
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -47,7 +37,7 @@ export default function ServiceCarousel() {
           msOverflowStyle: 'none'  // IE/Edge
         }}
       >
-        {allServices.map((srv, i) => (
+        {services.map((srv, i) => (
           <a 
             href="/horarios" 
             key={i}
@@ -66,7 +56,7 @@ export default function ServiceCarousel() {
             <div>
               <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{srv.icon}</div>
               <h3 className="mb-4 text-primary">{srv.title}</h3>
-              <p className="text-muted text-sm">{srv.desc}</p>
+              <p className="text-muted text-sm">{srv.description}</p>
             </div>
             <div className="mt-6" style={{ color: 'var(--color-primary)', fontWeight: 600, fontSize: '0.875rem' }}>
               Consultar Horarios &rarr;

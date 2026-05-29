@@ -1,36 +1,28 @@
-"use client";
+import { supabase } from '@/lib/supabase';
+import PrintButton from '@/components/PrintButton';
 
-export default function Horarios() {
-  const horarios = [
-    { especialidad: "Pediatría", dias: "Lunes a Jueves", horas: "7:00 AM a 12:00 PM / L,Mi,J: 1:00 PM a 6:00 PM", nota: "Previa Cita" },
-    { especialidad: "Inmunización", dias: "Lunes a Viernes", horas: "7:00 AM a 12:00 PM", nota: "Orden de llegada" },
-    { especialidad: "Nefrología Pediátrica", dias: "Miércoles y Jueves", horas: "7:00 AM a 12:00 PM", nota: "Previa Cita" },
-    { especialidad: "Obstetricia", dias: "Lunes a Viernes", horas: "7:00 AM a 12:00 PM / 1:00 PM a 6:00 PM", nota: "Previa Cita" },
-    { especialidad: "Gastroenterología Pediátrica", dias: "Jueves", horas: "7:00 AM a 12:00 PM", nota: "Previa Cita" },
-    { especialidad: "Medicina Ocupacional", dias: "L,Mi,V (Mañana) / L,M,J,V (Tarde)", horas: "7:00 AM a 12:00 PM / 1:00 PM a 5:00 PM", nota: "Orden regular" },
-    { especialidad: "Ginecología", dias: "Lunes a Viernes", horas: "7:00 AM a 12:00 PM / 1:00 PM a 6:00 PM", nota: "Previa Cita" },
-    { especialidad: "Podología", dias: "Mar, Mié, Jue, Vie", horas: "7:00 AM a 12:00 PM", nota: "Previa Cita" },
-    { especialidad: "Foniatra", dias: "Según Cronograma", horas: "7:00 AM a 1:00 PM", nota: "Cronograma Semanal" },
-    { especialidad: "Medicina Interna", dias: "Lunes a Viernes", horas: "7:00 AM a 12:00 PM / L,Mi: 1:00 PM a 6:00 PM", nota: "Previa Cita" },
-    { especialidad: "Cirugía General", dias: "Lunes a Viernes", horas: "7:00 AM a 12:00 PM / 1:00 PM a 6:00 PM", nota: "Previa Cita" },
-    { especialidad: "Emergencias 24 Horas", dias: "Lunes a Domingo", horas: "24 Horas (Adulto, Pediatría, Parto)", nota: "Si Contamos" },
-    { especialidad: "Traumatología", dias: "L,Mi,J,V", horas: "7:00 AM a 12:00 PM / 1:00 PM a 6:00 PM", nota: "Previa Cita" },
-    { especialidad: "Cirugía Pediátrica", dias: "L,M,Mi (Mañana) / L,M,V (Tarde)", horas: "7:00 AM a 12:00 PM / 1:00 PM a 6:00 PM", nota: "Previa Cita" },
-    { especialidad: "Medicina Familiar", dias: "Lunes a Viernes", horas: "M,Mi,J,V: 7AM a 12PM / L a V: 1PM a 6PM", nota: "Previa Cita" },
-    { especialidad: "Laboratorio Básico - Avanzada", dias: "Lunes a Viernes", horas: "7:00 AM a 12:00 PM / 1:00 PM a 6:00 PM", nota: "Pruebas Rápidas / Previa Cita" },
-    { especialidad: "Consulta Diferenciada Adolescentes", dias: "L,Mi,J", horas: "7:00 AM a 12:00 PM / Mi,J: 1:00 PM a 6:00 PM", nota: "Previa Cita" },
-    { especialidad: "Odontología", dias: "Lunes a Viernes", horas: "8:00 AM a 12:00 PM / 1:00 PM a 5:00 PM", nota: "Previa Cita" },
-    { especialidad: "Epidemiología", dias: "Según Cronograma", horas: "7:00 AM a 1:00 PM", nota: "Cronograma Semanal" },
-    { especialidad: "Orientación de la Conducta", dias: "Lunes, Martes y Viernes", horas: "7:00 AM a 12:00 PM", nota: "Previa Cita" },
-    { especialidad: "Dermatología", dias: "Martes", horas: "1:00 PM a 5:00 PM", nota: "Previa Cita" },
-    { especialidad: "Anestesiología", dias: "Lunes a Viernes", horas: "7:00 AM a 12:00 PM", nota: "Previa Cita" },
-    { especialidad: "Lactancia Materna", dias: "Mi (Mañana) / M,V (Tarde)", horas: "Mi: 7AM a 1PM / M,V: 1PM a 6PM", nota: "Previa Cita" },
-    { especialidad: "Cirugía Oncológica", dias: "Lunes", horas: "1:00 PM a 6:00 PM (Cada 15 Días)", nota: "Previa Cita" },
-    { especialidad: "Pie Diabético", dias: "Lunes a Viernes", horas: "7:00 AM a 12:00 PM", nota: "Orden de Llegada" },
-  ];
+export const revalidate = 0;
+
+export default async function Horarios() {
+  const { data: horarios } = await supabase
+    .from('servicios')
+    .select('*')
+    .eq('is_active', true)
+    .order('title', { ascending: true });
+
+  const { data: configRows } = await supabase.from('configuraciones').select('*');
+  const config = {};
+  if (configRows) {
+    configRows.forEach(row => {
+      config[row.clave] = row.valor;
+    });
+  }
 
   const currentDate = new Date();
   const monthYear = currentDate.toLocaleString('es-VE', { month: 'long', year: 'numeric' }).toUpperCase();
+  const instruccionesCita = config['instrucciones_cita'] || 'Las citas para las especialidades se pueden tomar presencialmente.';
+
+  const displayHorarios = horarios || [];
 
   return (
     <div className="container py-12 animate-fade-in">
@@ -39,9 +31,7 @@ export default function Horarios() {
         <p className="text-muted max-w-2xl" style={{ margin: '0 auto' }}>
           Información oficial de atención al público. Recuerda que la mayoría de los servicios especializados requieren <strong>Cita Previa</strong>.
         </p>
-        <button onClick={() => window.print()} className="btn-primary mt-6 flex items-center gap-2 mx-auto" style={{ backgroundColor: 'var(--color-secondary)' }}>
-          🖨️ Descargar Oficial en PDF
-        </button>
+        <PrintButton />
       </div>
 
       {/* DISEÑO WEB (Se oculta al imprimir) */}
@@ -50,9 +40,8 @@ export default function Horarios() {
           <h3 className="text-primary mb-2 flex items-center gap-2">
             <span>📅</span> ¿Cómo solicitar una cita?
           </h3>
-          <p className="text-muted text-sm leading-relaxed">
-            Las citas para las especialidades se pueden tomar de <strong>lunes a jueves</strong>, en el horario de <strong>8:00 a.m. a 11:00 a.m.</strong> y de <strong>2:00 p.m. a 5:00 p.m.</strong><br/><br/>
-            Para tomar una cita, los pacientes deben <strong>dirigirse presencialmente</strong> a la institución dentro de los días y horarios especificados.
+          <p className="text-muted text-sm leading-relaxed" style={{ whiteSpace: 'pre-line' }}>
+            {instruccionesCita}
           </p>
         </div>
 
@@ -68,20 +57,26 @@ export default function Horarios() {
               </tr>
             </thead>
             <tbody>
-              {horarios.map((item, index) => (
-                <tr key={index} style={{ borderBottom: index !== horarios.length - 1 ? '1px solid var(--color-border)' : 'none', transition: 'var(--transition-smooth)' }} className="hover-row">
-                  <td style={{ padding: '1rem 1.5rem', fontWeight: 600, color: 'var(--color-secondary)' }}>{item.especialidad}</td>
-                  <td style={{ padding: '1rem 1.5rem', color: 'var(--color-text)' }}>{item.dias}</td>
-                  <td style={{ padding: '1rem 1.5rem', color: 'var(--color-text)' }}>{item.horas}</td>
+              {displayHorarios.map((item, index) => (
+                <tr key={item.id || index} style={{ borderBottom: index !== displayHorarios.length - 1 ? '1px solid var(--color-border)' : 'none', transition: 'var(--transition-smooth)' }} className="hover-row">
+                  <td style={{ padding: '1rem 1.5rem', fontWeight: 600, color: 'var(--color-secondary)' }}>{item.title}</td>
+                  <td style={{ padding: '1rem 1.5rem', color: 'var(--color-text)' }}>
+                    <div>{item.dias} {item.dias_tarde ? <span style={{fontSize:'0.75rem', fontWeight:'bold', color:'var(--color-text-muted)'}}>(Mañana)</span> : ''}</div>
+                    {item.dias_tarde && <div style={{ marginTop: '0.5rem' }}>{item.dias_tarde} <span style={{fontSize:'0.75rem', fontWeight:'bold', color:'var(--color-text-muted)'}}>(Tarde)</span></div>}
+                  </td>
+                  <td style={{ padding: '1rem 1.5rem', color: 'var(--color-text)' }}>
+                    <div>{item.horas}</div>
+                    {item.horas_tarde && <div style={{ marginTop: '0.5rem' }}>{item.horas_tarde}</div>}
+                  </td>
                   <td style={{ padding: '1rem 1.5rem' }}>
                     <span style={{ 
-                      backgroundColor: item.nota.includes("Previa Cita") ? 'rgba(211, 47, 47, 0.1)' : 'rgba(13, 71, 161, 0.1)', 
-                      color: item.nota.includes("Previa Cita") ? 'var(--color-primary)' : 'var(--color-secondary)',
+                      backgroundColor: (item.nota || '').includes("Previa") ? 'rgba(211, 47, 47, 0.1)' : 'rgba(13, 71, 161, 0.1)', 
+                      color: (item.nota || '').includes("Previa") ? 'var(--color-primary)' : 'var(--color-secondary)',
                       padding: '0.35rem 0.85rem', 
                       borderRadius: '999px', 
                       fontSize: '0.875rem', 
                       fontWeight: 500,
-                      border: `1px solid ${item.nota.includes("Previa Cita") ? 'rgba(211, 47, 47, 0.2)' : 'rgba(13, 71, 161, 0.2)'}` 
+                      border: `1px solid ${(item.nota || '').includes("Previa") ? 'rgba(211, 47, 47, 0.2)' : 'rgba(13, 71, 161, 0.2)'}` 
                     }}>
                       {item.nota}
                     </span>
@@ -117,12 +112,22 @@ export default function Horarios() {
           </div>
 
           <div className="flyer-grid">
-            {horarios.map((item, index) => (
-              <div key={index} className="flyer-card">
-                <h4>{item.especialidad}</h4>
-                <div className="flyer-detail"><strong>Días:</strong> {item.dias}</div>
-                <div className="flyer-detail"><strong>Horas:</strong> {item.horas}</div>
-                <div className="flyer-badge" style={{ backgroundColor: item.nota.includes("Previa") ? '#ffebee' : '#e3f2fd', color: item.nota.includes("Previa") ? '#c62828' : '#1565c0' }}>
+            {displayHorarios.map((item, index) => (
+              <div key={item.id || index} className="flyer-card">
+                <h4>{item.title}</h4>
+                <div className="flyer-detail" style={{ marginBottom: '4px' }}>
+                  <div style={{ fontWeight: 'bold' }}>Mañana:</div>
+                  <div>{item.dias} | {item.horas}</div>
+                </div>
+                
+                {(item.dias_tarde || item.horas_tarde) && (
+                  <div className="flyer-detail" style={{ marginBottom: '4px' }}>
+                    <div style={{ fontWeight: 'bold' }}>Tarde:</div>
+                    <div>{item.dias_tarde} | {item.horas_tarde}</div>
+                  </div>
+                )}
+                
+                <div className="flyer-badge" style={{ marginTop: '8px', backgroundColor: (item.nota || '').includes("Previa") ? '#ffebee' : '#e3f2fd', color: (item.nota || '').includes("Previa") ? '#c62828' : '#1565c0' }}>
                   {item.nota}
                 </div>
               </div>

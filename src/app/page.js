@@ -1,7 +1,16 @@
 import Image from "next/image";
 import ServiceCarousel from "../components/ServiceCarousel";
+import { supabase } from '@/lib/supabase';
 
-export default function Home() {
+export const revalidate = 0;
+
+export default async function Home() {
+  const { data: carouselServices } = await supabase
+    .from('servicios')
+    .select('*')
+    .eq('is_active', true)
+    .limit(8);
+
   return (
     <div className="animate-fade-in">
       <section className="hero" style={{ 
@@ -25,18 +34,36 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="container py-12">
-        <div className="text-center mb-8">
-          <h2 className="text-primary" style={{ fontSize: '2.5rem' }}>Nuestros Servicios</h2>
-          <p className="text-muted mt-4" style={{ maxWidth: '600px', margin: '1rem auto' }}>
-            Contamos con diversas especialidades médicas para cubrir las necesidades de tu familia en un solo lugar.
-          </p>
-        </div>
+      <section className="container py-16">
+        <div className="flex flex-col md:flex-row gap-6 items-stretch">
+          
+          {/* Static Card (Inamovible) */}
+          <div className="glass-panel flex flex-col justify-between" style={{ 
+            flexShrink: 0,
+            width: '100%', 
+            maxWidth: '320px', 
+            marginTop: '1rem', 
+            marginBottom: '2rem', 
+            padding: '2rem',
+            alignSelf: 'stretch' 
+          }}>
+            <div>
+              <h2 className="text-primary font-bold" style={{ fontSize: '2.5rem', lineHeight: '1.1' }}>
+                Nuestros<br />Servicios
+              </h2>
+            </div>
+            <div className="mt-8">
+               <a href="/servicios" className="btn-primary w-full flex justify-center items-center gap-2">
+                 Ver todos los servicios &rarr;
+               </a>
+            </div>
+          </div>
 
-        <ServiceCarousel />
-
-        <div className="text-center mt-8">
-           <a href="/servicios" className="text-primary" style={{ textDecoration: 'underline', fontWeight: 500 }}>Ver todos los servicios disponibles &rarr;</a>
+          {/* Carousel (Movible) */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <ServiceCarousel services={carouselServices || []} />
+          </div>
+          
         </div>
       </section>
 

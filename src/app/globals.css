@@ -107,6 +107,37 @@ a {
   transform: translateY(-1px);
 }
 
+/* Formularios / Inputs */
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.15);
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+  color: #94a3b8;
+}
+
 /* Typography Helpers */
 .text-primary { color: var(--color-primary); }
 .text-muted { color: var(--color-text-muted); }

@@ -36,6 +36,8 @@ CREATE TABLE servicios (
   description TEXT,
   dias TEXT,
   horas TEXT,
+  dias_tarde TEXT,
+  horas_tarde TEXT,
   nota TEXT,
   is_active BOOLEAN DEFAULT true,
   order_index INTEGER DEFAULT 0,
@@ -64,13 +66,23 @@ CREATE POLICY "Configuraciones visibles para todos" ON configuraciones
   FOR SELECT USING (true);
 
 -- Insertar valores por defecto (Marca Blanca)
-INSERT INTO configuraciones (clave, valor)
-VALUES (
+INSERT INTO configuraciones (clave, valor) VALUES 
+(
   'instrucciones_cita',
   'Las citas para las especialidades se pueden tomar de lunes a jueves, en el horario de 8:00 a.m. a 11:00 a.m. y de 2:00 p.m. a 5:00 p.m.
 
 Para tomar una cita, los pacientes deben dirigirse presencialmente a la institución dentro de los días y horarios especificados.'
-) ON CONFLICT (clave) DO NOTHING;
+),
+('footer_ubicacion_texto', 'Sector Gulf, Guanire, Puerto La Cruz.'),
+('footer_ubicacion_enlace', 'https://www.google.com/maps/search/CLINICA+POPULAR+JESUS+DE+NAZARETH+Puerto+La+Cruz'),
+('footer_red_1_nombre', '📷 SaludAnz'),
+('footer_red_1_enlace', 'https://instagram.com/saludanz'),
+('footer_red_2_nombre', '📷 Gobernación'),
+('footer_red_2_enlace', 'https://instagram.com/anzoateguigob'),
+('footer_contacto_sede', 'Av. Miranda, Barcelona.'),
+('footer_contacto_tel', '0281-2752482 / 0412-0572125'),
+('footer_contacto_correo', 'saludanzrrhh2024@gmail.com')
+ON CONFLICT (clave) DO NOTHING;
 
 -- Nota: Para que el administrador pueda editar, deberás configurar políticas de autenticación en Supabase (RLS de UPDATE) más adelante.
 
@@ -78,3 +90,8 @@ Para tomar una cita, los pacientes deben dirigirse presencialmente a la instituc
 CREATE POLICY "Permitir insercion anonima servicios" ON servicios FOR INSERT WITH CHECK (true);
 CREATE POLICY "Permitir actualizacion anonima servicios" ON servicios FOR UPDATE USING (true);
 CREATE POLICY "Permitir borrado anonimo servicios" ON servicios FOR DELETE USING (true);
+
+-- Permisos anónimos de escritura para configuraciones (Marca Blanca)
+CREATE POLICY "Permitir insercion anonima configuraciones" ON configuraciones FOR INSERT WITH CHECK (true);
+CREATE POLICY "Permitir actualizacion anonima configuraciones" ON configuraciones FOR UPDATE USING (true);
+CREATE POLICY "Permitir borrado anonimo configuraciones" ON configuraciones FOR DELETE USING (true);
